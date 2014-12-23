@@ -12,6 +12,8 @@ require File.dirname(__FILE__)  + '/../../vendor/iText-4.2.0'
 
 module PDFRavager
   class Ravager
+    attr_accessor :strategy, :stamper
+
     def self.ravage(*args, &blk)
       warn "[DEPRECATION] Please use PDFRavager::Ravager's instance " +
            "methods instead of the `::ravage` method"
@@ -36,6 +38,8 @@ module PDFRavager
         Strategies::XFA.new(@stamper)
       when :smart
         Strategies::Smart.new(@stamper)
+      when :other
+        opts[:strategy_class].new(@stamper)
       end
     end
 

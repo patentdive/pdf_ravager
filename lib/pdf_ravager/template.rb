@@ -67,5 +67,13 @@ module PDFRavager
       self.fields == other.fields
     end
 
+    def xfa_fields
+      fields.select{|f| f.respond_to?(:set_xfa_value)}
+    end
+
+    def acro_fields
+      fields.select{|f| f.respond_to?(:acro_form_value)}
+    end
+
   end
 end
