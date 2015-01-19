@@ -1,9 +1,9 @@
 module PDFRavager
   module Strategies
     class Smart
-      def initialize(stamper)
+      def initialize(stamper,opts)
         @acro_form = Strategies::AcroForm.new(stamper)
-        @xfa       = Strategies::XFA.new(stamper)
+        @xfa       = Strategies::XFA.new(stamper,opts)
         afields    = stamper.getAcroFields
         @type = if afields.getXfa.isXfaPresent
           if afields.getFields.empty?

@@ -8,7 +8,7 @@ module PDFRavager
         @afields = stamper.getAcroFields
       end
 
-      def set_field_values(template)
+      def set_field_values(template,opts)
         template.acro_fields.select do |f|
           assign_field(f.acro_form_name, f.acro_form_value)
         end

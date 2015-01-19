@@ -12,7 +12,7 @@ require File.dirname(__FILE__)  + '/../../vendor/iText-4.2.0'
 
 module PDFRavager
   class Ravager
-    attr_accessor :strategy, :stamper
+    attr_accessor :strategy, :stamper, :template, :out
 
     def self.ravage(*args, &blk)
       warn "[DEPRECATION] Please use PDFRavager::Ravager's instance " +
@@ -35,7 +35,7 @@ module PDFRavager
       when :acro_forms
         Strategies::AcroForm.new(@stamper)
       when :xfa
-        Strategies::XFA.new(@stamper)
+        Strategies::XFA.new(@stamper,opts)
       when :smart
         Strategies::Smart.new(@stamper)
       when :other
@@ -43,8 +43,8 @@ module PDFRavager
       end
     end
 
-    def ravage
-      @strategy.set_field_values(@template)
+    def ravage 
+      @strategy.set_field_values(@template,@opts)
       @strategy.set_read_only if @opts[:read_only]
       @stamper.close
       @out

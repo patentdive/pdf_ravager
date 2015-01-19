@@ -3,12 +3,24 @@ module PDFRavager
     class XFA
       attr_accessor :doc, :xfa
 
-      def initialize(stamper)
+      def initialize(stamper,opts)
         @xfa = stamper.getAcroFields.getXfa
-        @doc = to_nokogiri_xml
+	@doc = to_nokogiri_xml
+	#if opts[:xml] != nil
+	#	puts "xml"
+	#	@doc = opts[:xml]
+	#else
+	#	puts "nokogiri"
+	#	@doc = to_nokogiri_xml
+        #end
       end
 
-      def set_field_values(template)
+      def set_field_values(template,opts)
+
+				if opts[:xml] != nil
+					@doc=opts[:xml]
+				end
+				#puts @doc
         template.xfa_fields.each do |f|
           get_matches(f).each{|node| f.set_xfa_value(node) }
         end
